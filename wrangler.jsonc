@@ -1,0 +1,13 @@
+{
+  // Site 100% estático: só ficheiros, sem código a correr no servidor.
+  "name": "vektor-site",
+  "compatibility_date": "2026-10-19",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "drop-trailing-slash"
+  },
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": false }
+}
