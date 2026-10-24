@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { siInstagram, siGithub } from 'simple-icons';
 ---
 <Base titulo="Vektor · Geoanalytics" descricao="Mapas e estudos com fonte, método e código. O território, em dados.">
   <span class="label">Caderno de análise geoespacial</span>
@@ -12,8 +13,8 @@ import Base from '../layouts/Base.astro';
     <li><span>04</span>Os erros são corrigidos à vista, com data.</li>
   </ul>
   <div class="links">
-    <a class="btn" href="https://www.instagram.com/vektorgis" rel="noopener">Instagram</a>
-    <a class="btn ghost" href="https://github.com/slimmjimmy99" rel="noopener">GitHub</a>
+    <a class="btn" href="https://www.instagram.com/vektorgis" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={siInstagram.path} /></svg>Instagram</a>
+    <a class="btn ghost" href="https://github.com/slimmjimmy99" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={siGithub.path} /></svg>GitHub</a>
   </div>
   <div class="fig"><img src="/contornos.svg" alt="" width="1200" height="120" /></div>
 </Base>

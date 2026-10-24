@@ -13,6 +13,7 @@
     "astro": "5.14.1"
   },
   "devDependencies": {
+    "simple-icons": "^15.17.0",
     "wrangler": "^4.152.0"
   }
 }
