@@ -9,7 +9,56 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:#fff;color:var(--ink);font:400 16px/1.55 var(--sans)}
 a{color:var(--geo);text-underline-offset:3px}
 a:focus-visible,.btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-main{max-width:640px;margin:0 auto;padding:64px 16px}
+main{padding-top:40px;padding-bottom:64px}
+.wrap{max-width:1040px;margin:0 auto;padding-left:16px;padding-right:16px}
+.topo{border-bottom:1px solid var(--line);background:#fff}
+.topo-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+.topo .brand{margin:0}
+.menu{display:flex;gap:20px;font-size:15px}
+.menu a{color:var(--ink);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent}
+.menu a:hover{border-color:var(--accent)}
+section{padding:48px 0;border-top:1px solid var(--line)}
+section.abertura{border-top:0;padding-top:16px;max-width:680px}
+h3{font:600 19px/1.25 var(--display);margin:8px 0 6px;letter-spacing:-.01em}
+.meta{font:500 13px/18px var(--mono);color:var(--muted)}
+.muted{color:var(--muted)}
+.destaque{display:grid;gap:32px;grid-template-columns:minmax(0,420px) 1fr;align-items:center}
+.destaque img,.cartao img{width:100%;height:auto;display:block;border-radius:6px;background:var(--surface)}
+.destaque h2{font-size:clamp(26px,4vw,36px);margin:10px 0 12px}
+.destaque h2 a{color:var(--ink);text-decoration:none}
+.destaque p{margin-bottom:14px}
+@media(max-width:720px){.destaque{grid-template-columns:1fr}}
+.cartoes{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:28px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.cartao a{display:block;color:var(--ink);text-decoration:none}
+.cartao img{margin-bottom:12px;transition:transform .2s}
+.cartao a:hover h3{text-decoration:underline;text-decoration-color:var(--accent)}
+.cartao p{color:var(--muted);font-size:15px}
+.cartoes.pequenos{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px}.cartoes.pequenos h3{font-size:16px}
+.estudo{max-width:680px}
+.estudo header{margin-bottom:24px}
+.estudo h1{font-size:clamp(30px,6vw,44px)}
+.estudo figure{margin:0 0 28px}
+.estudo figure img{width:100%;height:auto;display:block;border-radius:6px}
+.estudo figcaption{margin-top:8px}
+.estudo h2{margin-top:36px}
+.estudo>p{font-size:17px;line-height:1.65;margin-bottom:16px}
+.numeros{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:12px 0}
+.numeros div{border:1px solid var(--line);border-radius:6px;padding:12px}
+.numeros dt{font:500 12px/16px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.numeros dd{margin:6px 0 0;font:600 20px/1.2 var(--display);color:var(--ink)}
+details.ficha{border:1px solid var(--line);border-radius:6px;background:var(--surface);margin-top:32px;font-size:14px}
+details.ficha summary{cursor:pointer;padding:10px 14px;font:500 12px/16px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--geo)}
+details.ficha dl{margin:0;padding:0 14px 14px;display:grid;grid-template-columns:90px 1fr;gap:8px 14px}
+details.ficha dt{font:500 12px/20px var(--mono);color:var(--muted)}
+details.ficha dd{margin:0}
+@media(max-width:560px){details.ficha dl{grid-template-columns:1fr}details.ficha dd{margin-bottom:6px}}
+.mais{margin-top:56px;padding-top:32px;border-top:1px solid var(--line)}
+.rodape{border-top:1px solid var(--line);padding:28px 0;font-size:13px;color:var(--muted)}
+.rodape-in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.rodape p{margin:0}
+.sociais{display:flex;gap:18px}
+.sociais a{display:inline-flex;align-items:center;gap:6px;color:var(--ink);text-decoration:none}
+.sociais svg{width:16px;height:16px;fill:currentColor}
 .brand{display:flex;width:fit-content;align-items:center;gap:10px;text-decoration:none;color:var(--ink);margin-bottom:40px}
 .brand b{font:600 26px/1 var(--display);letter-spacing:-.02em;display:block}
 .brand i{font:500 10px/1 var(--mono);letter-spacing:.2em;color:var(--geo);font-style:normal;display:block;margin-top:4px}

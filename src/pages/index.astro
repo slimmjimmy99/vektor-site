@@ -1,20 +1,52 @@
 ---
 import Base from '../layouts/Base.astro';
-import { siInstagram, siGithub } from 'simple-icons';
+import { estudos, formatarData } from '../data/estudos.js';
+const [destaque, ...resto] = estudos;
 ---
-<Base titulo="Vektor · Geoanalytics" descricao="Mapas e estudos com fonte, método e código. O território, em dados.">
-  <span class="label">Caderno de análise geoespacial</span>
-  <h1>O território, em dados.</h1>
-  <p class="lead">Mapas e estudos com fonte, método e código. O caderno abre com o primeiro estudo completo.</p>
-  <ul class="manifest">
-    <li><span>01</span>Cada figura leva a fonte, a data e o sistema de coordenadas.</li>
-    <li><span>02</span>Dados e software abertos sempre que possível; código no GitHub.</li>
-    <li><span>03</span>Os números são calculados, não copiados.</li>
-    <li><span>04</span>Os erros são corrigidos à vista, com data.</li>
-  </ul>
-  <div class="links">
-    <a class="btn" href="https://www.instagram.com/vektorgis" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={siInstagram.path} /></svg>Instagram</a>
-    <a class="btn ghost" href="https://github.com/slimmjimmy99" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={siGithub.path} /></svg>GitHub</a>
-  </div>
-  <div class="fig"><img src="/contornos.svg" alt="" width="1200" height="120" /></div>
+<Base titulo="Vektor · Geoanalytics — caderno de análise geoespacial" descricao="Mapas e estudos com fonte, método e código. O território, em dados." imagem={destaque.imagem}>
+  <section class="abertura">
+    <span class="label">Caderno de análise geoespacial</span>
+    <h1>O território, em dados.</h1>
+    <p class="lead">Mapas e estudos com fonte, método e código. Angola, Portugal, Suíça e outros lugares que mereçam um mapa.</p>
+  </section>
+
+  <section class="destaque" aria-labelledby="t-destaque">
+    <a class="destaque-img" href={`/estudos/${destaque.slug}`} tabindex="-1" aria-hidden="true">
+      <img src={`/estudos/${destaque.imagem}-1080.webp`} alt="" width="1080" height="1350" />
+    </a>
+    <div class="destaque-txt">
+      <span class="label">Mais recente · {destaque.serie} · {destaque.lugar}</span>
+      <h2 id="t-destaque"><a href={`/estudos/${destaque.slug}`}>{destaque.titulo}</a></h2>
+      <p>{destaque.resumo}</p>
+      <p class="meta">{formatarData(destaque.data)}</p>
+      <a class="btn" href={`/estudos/${destaque.slug}`}>Ler o estudo</a>
+    </div>
+  </section>
+
+  <section id="estudos" aria-labelledby="t-estudos">
+    <h2 id="t-estudos">Estudos</h2>
+    <ul class="cartoes">
+      {estudos.map((e) => (
+        <li class="cartao">
+          <a href={`/estudos/${e.slug}`}>
+            <img src={`/estudos/${e.imagem}-1080.webp`} alt="" width="1080" height="1350" loading="lazy" />
+            <span class="label">{e.serie} · {e.lugar}</span>
+            <h3>{e.titulo}</h3>
+            <p>{e.resumo}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="sobre" aria-labelledby="t-sobre">
+    <h2 id="t-sobre">Sobre este caderno</h2>
+    <ul class="manifest">
+      <li><span>01</span>Cada figura leva a fonte, a data e o sistema de coordenadas.</li>
+      <li><span>02</span>Dados e software abertos sempre que possível; código no GitHub.</li>
+      <li><span>03</span>Os números são calculados, não copiados.</li>
+      <li><span>04</span>Os erros são corrigidos à vista, com data.</li>
+    </ul>
+    <p class="muted">Sugestões de lugares ou correções: <a href="mailto:contacto@vektorgis.com">contacto@vektorgis.com</a>.</p>
+  </section>
 </Base>

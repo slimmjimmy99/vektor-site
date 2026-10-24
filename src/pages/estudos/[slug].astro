@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import { estudos, formatarData } from '../../data/estudos.js';
+export function getStaticPaths() {
+  return estudos.map((e) => ({ params: { slug: e.slug }, props: { e } }));
+}
+const { e } = Astro.props;
+const outros = estudos.filter((o) => o.slug !== e.slug);
+---
+<Base titulo={`${e.titulo} · Vektor`} descricao={e.resumo} imagem={e.imagem}>
+  <article class="estudo">
+    <header>
+      <span class="label">{e.serie} · {e.lugar}</span>
+      <h1>{e.titulo}</h1>
+      <p class="lead">{e.resumo}</p>
+      <p class="meta"><time datetime={e.data}>{formatarData(e.data)}</time></p>
+    </header>
+    <figure>
+      <a href={`/estudos/${e.imagem}.webp`}>
+        <img src={`/estudos/${e.imagem}-1080.webp`} srcset={`/estudos/${e.imagem}-1080.webp 1080w, /estudos/${e.imagem}.webp 2160w`}
+             sizes="(max-width: 720px) 100vw, 680px" alt={e.alt} width="1080" height="1350" />
+      </a>
+      <figcaption class="small">Imagem em alta resolução: tocar no mapa.</figcaption>
+    </figure>
+    {e.texto.map((p) => <p>{p}</p>)}
+    <h2>Os números</h2>
+    <dl class="numeros">
+      {e.numeros.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+    </dl>
+    <h2>Limitações</h2>
+    <p>{e.limites}</p>
+    <details class="ficha" open>
+      <summary>Ficha</summary>
+      <dl>
+        <dt>Dados</dt><dd>{e.ficha.dados}</dd>
+        <dt>Projeção</dt><dd>{e.ficha.projecao}</dd>
+        <dt>Resolução</dt><dd>{e.ficha.resolucao}</dd>
+        <dt>Método</dt><dd>{e.ficha.metodo}</dd>
+        <dt>Data</dt><dd>{formatarData(e.data)}</dd>
+      </dl>
+    </details>
+  </article>
+  <aside class="mais" aria-labelledby="t-mais">
+    <h2 id="t-mais">Na mesma série</h2>
+    <ul class="cartoes pequenos">
+      {outros.map((o) => (
+        <li class="cartao"><a href={`/estudos/${o.slug}`}>
+          <img src={`/estudos/${o.imagem}-1080.webp`} alt="" width="1080" height="1350" loading="lazy" />
+          <span class="label">{o.serie} · {o.lugar}</span><h3>{o.titulo}</h3></a></li>
+      ))}
+    </ul>
+  </aside>
+</Base>
