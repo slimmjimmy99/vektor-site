@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { mapas } from '../data/galeria.js';
+import { PAISES, formatarData } from '../data/estudos.js';
+---
+<Base titulo="Galeria de mapas · Vektor" descricao="Mapas em folha A4 para descarregar: PDF vetorial e PNG a 300 ppp, com legenda, escala, sistema de coordenadas e fontes.">
+  <section class="abertura">
+    <span class="label">Galeria</span>
+    <h1>Mapas para descarregar</h1>
+    <p class="lead">Cada mapa sai na folha A4 da Vektor: legenda, escala, norte, enquadramento, sistema de coordenadas e fontes. PDF vetorial para imprimir; PNG a 300 ppp para apresentações.</p>
+    <p class="muted">Uso livre com atribuição: «Vektor · Geoanalytics (vektorgis.com)», mais as fontes indicadas na folha. Para outro formato, área ou língua, <a href="/pedir">peça aqui</a>.</p>
+  </section>
+  {PAISES.map((pais) => {
+    const lista = mapas.filter((m) => m.pais === pais);
+    return lista.length > 0 && (
+      <section aria-label={pais}>
+        <h2>{pais}</h2>
+        <ul class="galeria">
+          {lista.map((m) => (
+            <li>
+              <a href={`/galeria/${m.ficheiro}.png`}><img src={`/galeria/${m.ficheiro}-miniatura.webp`} alt={`Folha A4: ${m.titulo}`} width="900" height="636" loading="lazy" /></a>
+              <h3>{m.titulo}</h3>
+              <p class="meta">{m.fontes} · {formatarData(m.data)}</p>
+              <p class="descargas">
+                <a class="btn" href={`/galeria/${m.ficheiro}.pdf`} download>PDF · {m.pdf}</a>
+                <a class="btn ghost" href={`/galeria/${m.ficheiro}.png`} download>PNG · {m.png}</a>
+                <a href={`/estudos/${m.estudo}`}>Ler o estudo</a>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  })}
+</Base>

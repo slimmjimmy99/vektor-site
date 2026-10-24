@@ -4,9 +4,44 @@ const FICHA_COMUM = {
   metodo: 'Mosaico das tiles, remoção de picos isolados (mais de 400 m acima da mediana 3×3), recorte pela fronteira, reprojeção bilinear, classes de altitude e relevo sombreado multidirecional. Mapas e figura em QGIS 4.2, com scripts em Python (GDAL, NumPy).',
 };
 
+export const PAISES = ['Angola', 'Portugal', 'Suíça'];
+
 export const estudos = [
   {
+    slug: 'calor-urbano-luanda',
+    serie: 'Estudo',
+    lugar: 'Luanda',
+    pais: 'Angola',
+    data: '2026-10-24',
+    titulo: 'Em Luanda, quem arrefece são as árvores',
+    resumo: 'Satélite, 18 de maio de 2025: sob árvores, a superfície fica 3,4 °C mais fresca do que na área construída. O capim seco aquece tanto como a cidade.',
+    imagem: 'calor-luanda-mapa',
+    alt: 'Mapa da temperatura da superfície em Luanda a 18 de maio de 2025, em escala cividis de 38 °C (azul) a 46 °C (amarelo). As zonas mais frescas acompanham vales com vegetação e a costa; as mais quentes aparecem no sul e no leste, em áreas de capim e solo exposto. Médias por cobertura: árvores 39,1 °C; arbustos 39,8 °C; solo nu 41,6 °C; herbáceas 42,3 °C; construído 42,5 °C; agricultura 42,9 °C.',
+    extra: [{ imagem: 'calor-luanda-grafico', alt: 'Gráfico de densidade de 10 194 células de 300 m: no eixo horizontal o NDVI, no vertical a temperatura da superfície. A mediana desce de cerca de 43 °C com NDVI 0,15 para cerca de 39 °C com NDVI 0,65; correlação −0,46. Tabela: construído menos árvores +3,4 °C (2025) e +2,0 °C (2024); herbáceas menos construído −0,2 °C e +1,0 °C; R² em validação por blocos 0,35 e 0,24.' }],
+    texto: [
+      'O Landsat 9 mede a temperatura da superfície: o calor que emitem telhados, estradas, solo e vegetação. A passagem de 18 de maio de 2025, cerca das 10h30, cobre Luanda e os arredores, de Cacuaco ao Kilamba, com píxeis de 30 metros e 95 % da área sem nuvens.',
+      'Cruzando cada píxel com o mapa de cobertura do solo ESA WorldCover, a média por tipo ordena-se assim: árvores 39,1 °C, arbustos 39,8 °C, solo nu 41,6 °C, herbáceas 42,3 °C, construído 42,5 °C e agricultura 42,9 °C. A área com árvores fica 3,4 °C abaixo da construída.',
+      'O resultado menos esperado está na outra ponta: na estação seca, o capim e os campos agrícolas à volta da cidade aquecem tanto ou mais do que os bairros. Nesta medição, Luanda não é uma ilha de calor em relação aos arredores; o que separa o quente do fresco é a vegetação densa.',
+      'Para medir o efeito, a área foi dividida em 10 194 células de 300 m. A correlação entre o NDVI (índice de vegetação) e a temperatura é de −0,46. Num modelo linear com o NDVI, a fração construída e a distância à água, o NDVI tem o maior peso (−1,5 °C por desvio-padrão) e o modelo explica 35 % da variação em validação cruzada por blocos espaciais de 3 km, um teste que impede que células vizinhas ajudem a «adivinhar» as outras.',
+      'A mesma análise, repetida com a imagem de 3 de agosto de 2024, dá a mesma leitura: árvores 2,0 °C abaixo do construído e herbáceas 1,0 °C acima.',
+    ],
+    numeros: [
+      ['Construído − árvores', '+3,4 °C'],
+      ['Correlação NDVI × temperatura', '−0,46'],
+      ['R² (validação por blocos)', '0,35'],
+      ['Células analisadas', '10 194'],
+    ],
+    limites: 'É a temperatura da superfície, não do ar, e só às 10h30; à noite o padrão pode ser outro. O WorldCover é de 2021, por isso mudanças recentes não aparecem. A classe «árvores» ocupa cerca de 21 km², parte junto à água. Correlação não é causalidade: o modelo descreve, não prova.',
+    ficha: {
+      dados: 'Landsat 9 Collection 2 Level-2 (USGS, domínio público), cenas LC09_L2SP_182066_20250518 e LC09_L2SP_182066_20240803, via Microsoft Planetary Computer. ESA WorldCover 2021 v200 (CC BY 4.0; © ESA WorldCover project 2021, contém dados Copernicus Sentinel modificados). Natural Earth 10m.',
+      projecao: 'WGS 84 / UTM 33S (EPSG:32733)',
+      resolucao: '30 m (análise por píxel); grelha de 300 m para o modelo',
+      metodo: 'Máscara QA_PIXEL (nuvem, sombra, cirro) e retirada da água; ST_B10 convertida em °C (× 0,00341802 + 149 − 273,15); NDVI e NDBI da reflectância de superfície; frações de cobertura do WorldCover agregadas a 30 m; regressão linear com variáveis padronizadas (scikit-learn), validação cruzada em 5 grupos de blocos de 3 km. Mapa em QGIS 4.2; gráfico em Python.',
+    },
+  },
+  {
     slug: 'ponto-cotado-angola',
+    pais: 'Angola',
     serie: 'Ponto cotado',
     lugar: 'Angola',
     data: '2026-10-24',
@@ -29,6 +64,7 @@ export const estudos = [
   },
   {
     slug: 'ponto-cotado-portugal',
+    pais: 'Portugal',
     serie: 'Ponto cotado',
     lugar: 'Portugal',
     data: '2026-10-24',
@@ -51,6 +87,7 @@ export const estudos = [
   },
   {
     slug: 'ponto-cotado-suica',
+    pais: 'Suíça',
     serie: 'Ponto cotado',
     lugar: 'Suíça',
     data: '2026-10-24',

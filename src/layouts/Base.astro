@@ -32,7 +32,9 @@ const og = imagem ? new URL(`/estudos/${imagem}.jpg`, Astro.site) : null;
       </a>
       <nav aria-label="Principal" class="menu">
         <a href="/#estudos">Estudos</a>
+        <a href="/galeria">Galeria</a>
         <a href="/#sobre">Sobre</a>
+        <a class="menu-cta" href="/pedir">Pedir um mapa</a>
       </nav>
     </div>
   </header>
@@ -41,7 +43,7 @@ const og = imagem ? new URL(`/estudos/${imagem}.jpg`, Astro.site) : null;
   </main>
   <footer class="rodape">
     <div class="wrap rodape-in">
-      <p>© Vektor · Geoanalytics · <a href="/privacidade">Privacidade</a> · sem cookies nem analítica</p>
+      <p>© Vektor · Geoanalytics · <a href="/pedir">Pedir um mapa</a> · <a href="/galeria">Galeria</a> · <a href="/privacidade">Privacidade</a> · sem cookies nem analítica</p>
       <p class="sociais">
         <a href="https://www.instagram.com/vektorgis" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={siInstagram.path} /></svg>Instagram</a>
         <a href="https://github.com/slimmjimmy99" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={siGithub.path} /></svg>GitHub</a>

@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+const EMAIL = 'contacto@vektorgis.com';
+const corpo = (linhas) => encodeURIComponent(linhas.join('\n'));
+const PEDIDOS = [
+  {
+    t: 'Encomendar um mapa ou uma análise',
+    d: 'Mapas para relatórios, apresentações ou projetos; análises de satélite (vegetação, temperatura, expansão urbana, água); relevo e bacias hidrográficas; estudos com dados abertos.',
+    assunto: 'Pedido de mapa',
+    linhas: ['Lugar ou área:', 'O que precisa de mostrar:', 'Para quando:', 'Formato (A4, A3, imagem, dados):', 'Uso (relatório, apresentação, publicação):'],
+  },
+  {
+    t: 'Propor uma colaboração',
+    d: 'Projetos de investigação, consultoria, ONG, imprensa ou ensino que precisem de cartografia ou de ciência de dados espacial.',
+    assunto: 'Proposta de colaboração',
+    linhas: ['Quem somos:', 'O projeto:', 'O que se espera da Vektor:', 'Prazos:'],
+  },
+  {
+    t: 'Sugerir um lugar ou um tema',
+    d: 'Um lugar que merece um mapa, uma pergunta que os dados podem responder ou um erro a corrigir.',
+    assunto: 'Sugestão para o caderno',
+    linhas: ['Lugar ou tema:', 'Porquê:', 'Dados que conhece (se houver):'],
+  },
+];
+---
+<Base titulo="Pedir um mapa · Vektor" descricao="Encomendar um mapa ou uma análise de satélite, propor uma colaboração ou sugerir um lugar para o caderno.">
+  <section class="abertura">
+    <span class="label">Pedir um mapa</span>
+    <h1>Um mapa, uma análise ou uma ideia</h1>
+    <p class="lead">Os pedidos chegam por e-mail. Cada botão abre uma mensagem já organizada; basta preencher. A resposta indica se o trabalho é possível, com que dados, em quanto tempo e a que custo.</p>
+  </section>
+  <section aria-label="Tipos de pedido">
+    <ul class="pedidos">
+      {PEDIDOS.map((p) => (
+        <li>
+          <h2>{p.t}</h2>
+          <p>{p.d}</p>
+          <a class="btn" href={`mailto:${EMAIL}?subject=${encodeURIComponent(p.assunto)}&body=${corpo(p.linhas)}`}>Escrever: {p.assunto.toLowerCase()}</a>
+        </li>
+      ))}
+    </ul>
+    <p class="muted">Ou diretamente para <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
+  </section>
+  <section aria-labelledby="t-o-que">
+    <h2 id="t-o-que">O que é possível fazer</h2>
+    <ul class="series">
+      <li><h3>Cartografia</h3><p>Mapas de localização, temáticos e de enquadramento, no formato da folha A4/A3 ou para ecrã.</p></li>
+      <li><h3>Deteção remota</h3><p>Landsat e Sentinel: vegetação, temperatura da superfície, água, alterações ao longo do tempo.</p></li>
+      <li><h3>Relevo e água</h3><p>Modelos de elevação, declives, bacias e redes de drenagem.</p></li>
+      <li><h3>Ciência de dados espacial</h3><p>Estatística e modelos com validação espacial, com o código entregue quando fizer parte do trabalho.</p></li>
+    </ul>
+  </section>
+  <section aria-labelledby="t-resp">
+    <h2 id="t-resp">Responsável</h2>
+    <p>João Baptista Rodrigues, Suíça · <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+    <p class="small">Os dados enviados por e-mail servem apenas para responder ao pedido. Ver a <a href="/privacidade">política de privacidade</a>.</p>
+  </section>
+</Base>

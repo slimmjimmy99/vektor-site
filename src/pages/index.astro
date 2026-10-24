@@ -1,13 +1,31 @@
 ---
 import Base from '../layouts/Base.astro';
-import { estudos, formatarData } from '../data/estudos.js';
-const [destaque, ...resto] = estudos;
+import { estudos, PAISES, formatarData } from '../data/estudos.js';
+import { mapas } from '../data/galeria.js';
+const destaque = estudos.find((e) => e.slug === 'calor-urbano-luanda');
+const porPais = PAISES.map((p) => ({ pais: p, lista: estudos.filter((e) => e.pais === p).sort((a, b) => b.data.localeCompare(a.data)) }));
+const SERIES = [
+  ['Estudos', 'Uma pergunta, dados de satélite e um modelo: análise completa, com limitações.', 'Luanda'],
+  ['Ponto cotado', 'O relevo de um lugar: classes de altitude, relevo sombreado e o ponto mais alto.', 'Angola, Portugal, Suíça'],
+  ['Nota de rodapé', 'Um mapa, um número: curiosidades que se explicam numa imagem.', 'em breve'],
+  ['Três caminhos', 'A mesma tarefa em QGIS, Python e SQL, com o mesmo resultado.', 'em breve'],
+];
 ---
-<Base titulo="Vektor · Geoanalytics — caderno de análise geoespacial" descricao="Mapas e estudos com fonte, método e código. O território, em dados." imagem={destaque.imagem}>
+<Base titulo="Vektor · Geoanalytics — caderno de análise geoespacial" descricao="Mapas e estudos com fonte, método e código: satélite, relevo e ciência de dados espacial sobre Angola, Portugal e Suíça." imagem={destaque.imagem}>
   <section class="abertura">
     <span class="label">Caderno de análise geoespacial</span>
     <h1>O território, em dados.</h1>
-    <p class="lead">Mapas e estudos com fonte, método e código. Angola, Portugal, Suíça e outros lugares que mereçam um mapa.</p>
+    <p class="lead">Mapas, imagens de satélite e ciência de dados espacial, com fonte, método e código. Angola, Portugal, Suíça e outros lugares que mereçam um mapa.</p>
+    <div class="acoes">
+      <a class="btn" href="#estudos">Ver os estudos</a>
+      <a class="btn ghost" href="/pedir">Pedir um mapa</a>
+    </div>
+    <ul class="contagem" aria-label="O caderno em números">
+      <li><b>{estudos.length}</b><span>estudos</span></li>
+      <li><b>{mapas.length}</b><span>mapas para descarregar</span></li>
+      <li><b>{PAISES.length}</b><span>países</span></li>
+      <li><b>100 %</b><span>dados abertos</span></li>
+    </ul>
   </section>
 
   <section class="destaque" aria-labelledby="t-destaque">
@@ -15,38 +33,86 @@ const [destaque, ...resto] = estudos;
       <img src={`/estudos/${destaque.imagem}-1080.webp`} alt="" width="1080" height="1350" />
     </a>
     <div class="destaque-txt">
-      <span class="label">Mais recente · {destaque.serie} · {destaque.lugar}</span>
+      <span class="label">Em destaque · {destaque.serie} · {destaque.lugar}</span>
       <h2 id="t-destaque"><a href={`/estudos/${destaque.slug}`}>{destaque.titulo}</a></h2>
       <p>{destaque.resumo}</p>
-      <p class="meta">{formatarData(destaque.data)}</p>
+      <dl class="numeros">
+        {destaque.numeros.slice(0, 2).map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+      </dl>
+      <p class="meta">Landsat 9 · ESA WorldCover · regressão com validação espacial · {formatarData(destaque.data)}</p>
       <a class="btn" href={`/estudos/${destaque.slug}`}>Ler o estudo</a>
     </div>
   </section>
 
   <section id="estudos" aria-labelledby="t-estudos">
-    <h2 id="t-estudos">Estudos</h2>
-    <ul class="cartoes">
-      {estudos.map((e) => (
-        <li class="cartao">
-          <a href={`/estudos/${e.slug}`}>
-            <img src={`/estudos/${e.imagem}-1080.webp`} alt="" width="1080" height="1350" loading="lazy" />
-            <span class="label">{e.serie} · {e.lugar}</span>
-            <h3>{e.titulo}</h3>
-            <p>{e.resumo}</p>
-          </a>
-        </li>
-      ))}
+    <h2 id="t-estudos">Estudos por país</h2>
+    <nav class="paises" aria-label="Países">
+      {porPais.map(({ pais, lista }) => <a href={`#pais-${pais.toLowerCase().normalize('NFD').replace(/[^a-z]/g, '')}`}>{pais} <span>{lista.length}</span></a>)}
+    </nav>
+    {porPais.map(({ pais, lista }) => (
+      <div class="grupo-pais" id={`pais-${pais.toLowerCase().normalize('NFD').replace(/[^a-z]/g, '')}`}>
+        <h3 class="pais">{pais}</h3>
+        <ul class="cartoes">
+          {lista.map((e) => (
+            <li class="cartao">
+              <a href={`/estudos/${e.slug}`}>
+                <img src={`/estudos/${e.imagem}-1080.webp`} alt="" width="1080" height="1350" loading="lazy" />
+                <span class="label">{e.serie} · {e.lugar}</span>
+                <h3>{e.titulo}</h3>
+                <p>{e.resumo}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+
+  <section aria-labelledby="t-series">
+    <h2 id="t-series">Séries</h2>
+    <ul class="series">
+      {SERIES.map(([n, d, l]) => (<li><h3>{n}</h3><p>{d}</p><span class="meta">{l}</span></li>))}
     </ul>
+  </section>
+
+  <section class="faixa" aria-labelledby="t-galeria">
+    <div>
+      <h2 id="t-galeria">Galeria de mapas</h2>
+      <p>Os mapas dos estudos em folha A4, com legenda, escala, sistema de coordenadas e fontes. PDF vetorial e PNG a 300 ppp, para descarregar e usar com atribuição.</p>
+      <a class="btn" href="/galeria">Abrir a galeria</a>
+    </div>
+    <ul class="miniaturas">
+      {mapas.slice(0, 2).map((m) => (<li><a href="/galeria"><img src={`/galeria/${m.ficheiro}-miniatura.webp`} alt={`Folha A4: ${m.titulo}`} loading="lazy" width="900" height="636" /></a></li>))}
+    </ul>
+  </section>
+
+  <section aria-labelledby="t-metodo">
+    <h2 id="t-metodo">Como se faz cada entrada</h2>
+    <ol class="passos">
+      <li><b>Dados abertos</b><span>Satélite (Landsat, Sentinel), relevo, cobertura do solo e cartografia de base, com licença verificada.</span></li>
+      <li><b>Script</b><span>Cada número sai de código em Python ou SQL; nada é copiado à mão.</span></li>
+      <li><b>Mapa com ficha</b><span>QGIS, com projeção adequada, legenda, escala e fontes em cada figura.</span></li>
+      <li><b>Limitações à vista</b><span>O que os dados não dizem fica escrito; as correções levam data.</span></li>
+    </ol>
+    <p class="meta fontes">Fontes usadas até agora: Landsat 9 (USGS) · ESA WorldCover · AWS Terrain Tiles (SRTM, GMTED2010) · Natural Earth</p>
+  </section>
+
+  <section class="faixa escura" aria-labelledby="t-pedir">
+    <div>
+      <h2 id="t-pedir">Pedir um mapa, sugerir um lugar, propor uma colaboração</h2>
+      <p>Mapas por encomenda, análises de satélite, estudos para relatórios ou uma ideia para o próximo caderno.</p>
+    </div>
+    <a class="btn claro" href="/pedir">Fazer um pedido</a>
   </section>
 
   <section id="sobre" aria-labelledby="t-sobre">
     <h2 id="t-sobre">Sobre este caderno</h2>
+    <p class="lead">Um caderno de análise geoespacial sobre Angola, Portugal, a Suíça e o resto da lusofonia, com o método e os dados à vista.</p>
     <ul class="manifest">
       <li><span>01</span>Cada figura leva a fonte, a data e o sistema de coordenadas.</li>
       <li><span>02</span>Dados e software abertos sempre que possível; código no GitHub.</li>
       <li><span>03</span>Os números são calculados, não copiados.</li>
       <li><span>04</span>Os erros são corrigidos à vista, com data.</li>
     </ul>
-    <p class="muted">Sugestões de lugares ou correções: <a href="mailto:contacto@vektorgis.com">contacto@vektorgis.com</a>.</p>
   </section>
 </Base>

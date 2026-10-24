@@ -23,6 +23,11 @@ const outros = estudos.filter((o) => o.slug !== e.slug);
       <figcaption class="small">Imagem em alta resolução: tocar no mapa.</figcaption>
     </figure>
     {e.texto.map((p) => <p>{p}</p>)}
+    {e.extra && e.extra.map((f) => (
+      <figure>
+        <a href={`/estudos/${f.imagem}.webp`}><img src={`/estudos/${f.imagem}-1080.webp`} alt={f.alt} width="1080" height="1350" loading="lazy" /></a>
+      </figure>
+    ))}
     <h2>Os números</h2>
     <dl class="numeros">
       {e.numeros.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
@@ -40,8 +45,12 @@ const outros = estudos.filter((o) => o.slug !== e.slug);
       </dl>
     </details>
   </article>
+  <aside class="pedido">
+    <h2>Precisa de um mapa como este?</h2>
+    <p>Mapas, análises de satélite e estudos por encomenda, ou uma colaboração. <a class="btn" href="/pedir">Pedir um mapa</a></p>
+  </aside>
   <aside class="mais" aria-labelledby="t-mais">
-    <h2 id="t-mais">Na mesma série</h2>
+    <h2 id="t-mais">Outros estudos</h2>
     <ul class="cartoes pequenos">
       {outros.map((o) => (
         <li class="cartao"><a href={`/estudos/${o.slug}`}>
