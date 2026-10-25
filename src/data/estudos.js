@@ -1,6 +1,6 @@
 // Entradas do caderno. Os números vêm de estatisticas.json (scripts em vektor_conteudo/ponto_cotado/scripts).
 const FICHA_COMUM = {
-  dados: 'AWS Terrain Tiles (Terrarium, Mapzen; fontes SRTM, GMTED2010, ETOPO1 e outras), descarregados a 24 out 2026. Fronteiras e lagos: Natural Earth 10m v5.1 (domínio público).',
+  dados: 'AWS Terrain Tiles (Terrarium, Mapzen; fontes SRTM, EU-DEM, GMTED2010, ETOPO1 e outras), descarregados a 24 out 2026. Nas peças europeias: produzido com dados e informação Copernicus financiados pela União Europeia (camadas EU-DEM). Fronteiras e lagos: Natural Earth 10m v5.1 (domínio público).',
   metodo: 'Mosaico das tiles, remoção de picos isolados (mais de 400 m acima da mediana 3×3), recorte pela fronteira, reprojeção bilinear, classes de altitude e relevo sombreado multidirecional. Mapas e figura em QGIS 4.2, com scripts em Python (GDAL, NumPy).',
 };
 
@@ -23,7 +23,7 @@ export const estudos = [
       'Cruzando cada píxel com o mapa de cobertura do solo ESA WorldCover, a média por tipo ordena-se assim: árvores 39,1 °C, arbustos 39,8 °C, solo nu 41,6 °C, herbáceas 42,3 °C, construído 42,5 °C e agricultura 42,9 °C. A área com árvores fica 3,4 °C abaixo da construída.',
       'O resultado menos esperado está na outra ponta: na estação seca, o capim e os campos agrícolas à volta da cidade aquecem tanto ou mais do que os bairros. Nesta medição, Luanda não é uma ilha de calor em relação aos arredores; o que separa o quente do fresco é a vegetação densa.',
       'Para medir o efeito, a área foi dividida em 10 194 células de 300 m. A correlação entre o NDVI (índice de vegetação) e a temperatura é de −0,46. Num modelo linear com o NDVI, a fração construída e a distância à água, o NDVI tem o maior peso (−1,5 °C por desvio-padrão) e o modelo explica 35 % da variação em validação cruzada por blocos espaciais de 3 km, um teste que impede que células vizinhas ajudem a «adivinhar» as outras.',
-      'A mesma análise, repetida com a imagem de 3 de agosto de 2024, dá a mesma leitura: árvores 2,0 °C abaixo do construído e herbáceas 1,0 °C acima.',
+      'Repetida com a imagem de 3 de agosto de 2024, a análise confirma que as árvores são a cobertura mais fresca (2,0 °C abaixo do construído; herbáceas 1,0 °C acima), mas a relação com o NDVI quase desaparece (correlação −0,03). A leitura mais sólida é a das árvores; a do NDVI depende da data.',
     ],
     numeros: [
       ['Construído − árvores', '+3,4 °C'],
@@ -33,7 +33,7 @@ export const estudos = [
     ],
     limites: 'É a temperatura da superfície, não do ar, e só às 10h30; à noite o padrão pode ser outro. O WorldCover é de 2021, por isso mudanças recentes não aparecem. A classe «árvores» ocupa cerca de 21 km², parte junto à água. Correlação não é causalidade: o modelo descreve, não prova.',
     ficha: {
-      dados: 'Landsat 9 Collection 2 Level-2 (USGS, domínio público), cenas LC09_L2SP_182066_20250518 e LC09_L2SP_182066_20240803, via Microsoft Planetary Computer. ESA WorldCover 2021 v200 (CC BY 4.0; © ESA WorldCover project 2021, contém dados Copernicus Sentinel modificados). Natural Earth 10m.',
+      dados: 'Landsat 9 Collection 2 Level-2 (USGS, domínio público), cenas LC09_L2SP_182066_20250518 e LC09_L2SP_182066_20240803, via Microsoft Planetary Computer. ESA WorldCover 2021 v200 (CC BY 4.0; © ESA WorldCover project 2021 / contém dados Copernicus Sentinel modificados (2021) processados pelo consórcio ESA WorldCover). Natural Earth 10m.',
       projecao: 'WGS 84 / UTM 33S (EPSG:32733)',
       resolucao: '30 m (análise por píxel); grelha de 300 m para o modelo',
       metodo: 'Máscara QA_PIXEL (nuvem, sombra, cirro) e retirada da água; ST_B10 convertida em °C (× 0,00341802 + 149 − 273,15); NDVI e NDBI da reflectância de superfície; frações de cobertura do WorldCover agregadas a 30 m; regressão linear com variáveis padronizadas (scikit-learn), validação cruzada em 5 grupos de blocos de 3 km. Mapa em QGIS 4.2; gráfico em Python.',
@@ -69,11 +69,11 @@ export const estudos = [
     lugar: 'Portugal',
     data: '2026-10-24',
     titulo: 'Portugal continental, do mar à Torre',
-    resumo: 'Só 1,7 % do continente passa dos 1000 metros. Quase metade fica abaixo dos 200.',
+    resumo: 'Só 1,7 % do continente passa dos 1000 metros. Mais de dois quintos ficam abaixo dos 200.',
     imagem: 'ponto-cotado-portugal',
     alt: 'Mapa hipsométrico de Portugal continental com relevo sombreado. O sul e o litoral ficam abaixo de 200 m; o relevo acima de 500 m concentra-se no norte e no centro, com a Serra da Estrela e a Torre (1993 m). Barras: 0–200 m 42,9 %; 200–500 m 34,9 %; 500–1000 m 20,6 %; 1000–1500 m 1,6 %; acima de 1500 m 0,1 %.',
     texto: [
-      'Portugal continental é sobretudo baixo: 42,9 % do território fica abaixo dos 200 metros e a altitude mediana é 234 m. As terras acima dos 500 metros concentram-se a norte do Tejo; a sul, a planície domina.',
+      'Portugal continental é sobretudo baixo: 42,9 % do território fica abaixo dos 200 metros e a altitude mediana é 234 m. No mapa, as serras acima dos 1000 metros ficam a norte do Tejo; a sul predominam as terras baixas.',
       'Acima dos 1000 metros fica apenas 1,7 % do continente, quase todo na Serra da Estrela e nas serras do norte. A Torre, com 1993 m, é o ponto mais alto do continente. O ponto mais alto do país é a Montanha do Pico, nos Açores, com 2351 m.',
     ],
     numeros: [
@@ -96,7 +96,7 @@ export const estudos = [
     imagem: 'ponto-cotado-suica',
     alt: 'Mapa hipsométrico da Suíça com relevo sombreado e lagos. O Planalto Central, entre o Jura e os Alpes, fica entre 300 e 1000 m; os Alpes ocupam o sul e o leste, com grandes áreas acima de 2000 m, e a Dufourspitze (4634 m) junto à fronteira com Itália. Barras: 0–500 m 16,6 %; 500–1000 m 30,3 %; 1000–2000 m 30,0 %; 2000–3000 m 20,9 %; acima de 3000 m 2,2 %.',
     texto: [
-      'Entre o Jura, a noroeste, e os Alpes, a sul e a leste, fica o Planalto Central, onde vive a maior parte da população. Mesmo assim, 53 % do país está acima dos 1000 metros e a altitude mediana é 1084 m.',
+      'Entre o Jura, a noroeste, e os Alpes, a sul e a leste, fica o Planalto Central, mais baixo. Mesmo assim, 53 % do país está acima dos 1000 metros e a altitude mediana é 1084 m.',
       'Acima dos 2000 metros fica 23,1 % da Suíça, quase um quarto do território: são os Alpes, de Valais aos Grisões. Acima dos 3000 m ficam 2,2 %. O ponto mais alto é a Dufourspitze, no maciço do Monte Rosa, com 4634 m.',
     ],
     numeros: [
