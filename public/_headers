@@ -7,5 +7,3 @@
   Content-Security-Policy: default-src 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
-/_ig_2217d3a60bb17822ea6c7af8/*
-  X-Robots-Tag: noindex, nofollow
