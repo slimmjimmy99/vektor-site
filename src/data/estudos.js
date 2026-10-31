@@ -8,6 +8,38 @@ export const PAISES = ['Angola', 'Portugal', 'Suíça'];
 
 export const estudos = [
   {
+    slug: 'random-forest-chiloango',
+    serie: 'Estudo',
+    lugar: 'Foz do Chiloango',
+    pais: 'Angola',
+    data: '2026-10-31',
+    titulo: 'Mangal ou floresta? O algoritmo ainda hesita',
+    resumo: 'Um Random Forest classifica a foz do rio Chiloango com 74 a 82 % de acerto. O mangal confunde-se com a floresta de água doce: de cima, quase não se distinguem.',
+    imagem: 'rf-chiloango-mapa',
+    alt: 'Mapa de classificação Random Forest da foz do rio Chiloango, em Cabinda, com nove classes. O vale do rio, a sudeste da foz, aparece em magenta (mangal) e verde-escuro (floresta de água doce); à volta, floresta de terra firme em verde-claro, savana em amarelo e zona húmida herbácea em azul-claro; o oceano a azul. Acerto de 81 % nos 79 pontos de validação, resultado provisório.',
+    extra: [{ imagem: 'rf-chiloango-grafico', alt: 'Tabela e gráfico. Medianas nos pontos de referência, mangal contra floresta de água doce: MVI 3,6 e 3,3; mudança do NDVI entre estações +0,10 e +0,11; Sentinel-1 VV −5,6 e −5,5 dB; ALOS-2 HV −12,8 e −12,5 dB. Erros do modelo Python: dos 7 pontos de mangal, 5 certos e 2 classificados como floresta doce; dos 9 de floresta doce, 8 certos e 1 como mangal. Exatidão global: SNAP 82,3 %, Python 81,0 %, média de 30 repetições 81,4 %, divisão por blocos inteiros 74,4 %.' }],
+    texto: [
+      'O Random Forest é um conjunto de árvores de decisão. Cada árvore aprende com uma amostra sorteada dos pontos de referência e, em cada pergunta, sorteia algumas variáveis; no fim, todas votam e cada píxel fica com a classe mais votada. É um dos métodos mais usados para transformar imagens de satélite em mapas de cobertura do solo, porque lida bem com muitas variáveis e dá uma medida de exatidão.',
+      'Na foz do rio Chiloango, em Cabinda, o modelo separa nove classes, da água ao mangal, numa janela de 380 km². Cada píxel de 10 m tem 21 variáveis: bandas e índices do Sentinel-2 em duas estações (cacimbo e chuvas), o índice de mangais MVI e a distância à água. Os 268 pontos de referência foram fotointerpretados: 189 para treinar e 79 para validar, separados em blocos de 2 km para o teste não ser fácil demais.',
+      'O mesmo trabalho foi feito em duas ferramentas. No SNAP, o programa gratuito da ESA, tudo se faz por menus: 82,3 % de acerto (kappa 0,79), com uma variável a mais, a altura da copa. Em Python, com scikit-learn e 500 árvores: 81,0 % (kappa 0,78). As variáveis com mais peso foram a distância à água e o infravermelho de ondas curtas, que mede a água nas folhas e no solo.',
+      'O ponto difícil é o vale. Mangal e floresta de água doce são densos, verdes e alagados, e respondem quase igual em todos os dados testados: no MVI, criado para realçar mangais (3,6 contra 3,3), na mudança entre estações e no radar Sentinel-1 e ALOS-2. Os erros do mangal são todos com a floresta doce, e vice-versa. No terreno, a diferença está na água: o mangal só cresce onde chega a água salgada ou salobra da maré.',
+      'A exatidão depende de como se testa. Com 30 repetições e a divisão atual dos blocos, a média é 81,4 %; com outra divisão, que afasta mais o teste do treino e inclui mais mangal, desce para 74,4 %. O resultado honesto é um intervalo, não um número, e o estudo continua em curso.',
+    ],
+    numeros: [
+      ['Acerto (Python, 79 pontos)', '81,0 %'],
+      ['Acerto (SNAP, 79 pontos)', '82,3 %'],
+      ['Intervalo conforme o teste', '74–82 %'],
+      ['Mangal: encontrado · certo (Python)', '71 % · 83 %'],
+    ],
+    limites: 'Resultados provisórios. A validação tem só 7 a 11 pontos de mangal: um ponto muda o acerto dessa classe em 9 a 14 pontos percentuais. A classe «edificado» tem muitos falsos positivos (40 % de acerto do utilizador). Os mapas globais de mangal dão 1 858 a 2 344 ha nesta zona e uma ficha regional cerca de 130 ha, por isso a área de mangal fica para depois. Próximos passos: 100 novos pontos de referência (60 de mangal), altitude da faixa entre marés, distância ao mar e áreas com intervalo de confiança.',
+    ficha: {
+      dados: 'Sentinel-2 L2A, medianas de cacimbo (18/07/25, 15/08/25, 21/07/26, 22/08/26) e chuvas (12/02/24, 26/02/25, 07/05/25); Sentinel-1 IW GRD de 26/08/2025 (contém dados Copernicus Sentinel modificados, 2024–2026). ALOS-2 PALSAR-2, mosaico anual 2021 (© JAXA). Rede de drenagem e distância à água modeladas a partir do Copernicus DEM: produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved. Altura da copa no SNAP (só estatísticas, sem mapa): Copernicus DEM − FABDEM (Hawker et al. 2022, CC BY-NC-SA 4.0). Global Mangrove Watch (Bunting et al. 2022, CC BY 4.0); ESA WorldCover 2021 (© ESA WorldCover project, CC BY 4.0). Natural Earth.',
+      projecao: 'RSAO13 / UTM 33S (EPSG:9157)',
+      resolucao: '10 m',
+      metodo: 'Composições medianas do Sentinel-2 por estação, índices NDVI, MNDWI, NDMI e MVI (Baloloy et al. 2020); 268 pontos de referência fotointerpretados, divididos em blocos espaciais de 2 km; Random Forest no SNAP (parâmetros por defeito) e em Python (scikit-learn, 500 árvores, max_features sqrt); matriz de confusão e kappa nos pontos de validação; 30 repetições com sementes diferentes. Mapa em Python.',
+    },
+  },
+  {
     slug: 'calor-urbano-luanda',
     serie: 'Estudo',
     lugar: 'Luanda',
